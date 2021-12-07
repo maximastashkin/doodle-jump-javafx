@@ -4,17 +4,20 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ru.rsreu.doodle_game.control.KeyPolling;
 
 import java.io.IOException;
 
 public class GameApplication extends Application {
     private final static int WINDOW_WIDTH = 450;
     private final static int WINDOW_HEIGHT = 750;
+
     @Override
     public void start(Stage stage) throws IOException {
         Scene scene = loadGameScene();
         stage.setScene(scene);
 
+        KeyPolling.getInstance().pollScene(scene);
         stage.setMaximized(false);
         stage.setResizable(false);
         stage.setTitle("Doodle Jump");

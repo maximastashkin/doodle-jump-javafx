@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import ru.rsreu.doodle_game.control.KeyPolling;
 import ru.rsreu.doodle_game.loop.GameLoopTimer;
 import ru.rsreu.doodle_game.model.GameObject;
 import ru.rsreu.doodle_game.renderer.Renderer;
@@ -26,8 +27,11 @@ public class GameController implements Initializable {
     private final GameObject player = new GameObject(
             new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/doodler.png"))));
 
+    private final KeyPolling keyPolling = KeyPolling.getInstance();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         initialiseCanvas();
         player.setPosition(200, 500);
         Renderer renderer = new Renderer(this.gameCanvas, BACKGROUND_IMAGE);
@@ -38,6 +42,7 @@ public class GameController implements Initializable {
             @Override
             public void tick(float secondSinceLastFrame) {
                 renderer.render();
+                System.out.println(keyPolling);
             }
         };
         gameLoopTimer.start();
