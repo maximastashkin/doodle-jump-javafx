@@ -22,7 +22,20 @@ public class Collider {
     public boolean isCollideWith(Collider other) {
         double deltaX = this.position.getX() - other.position.getX();
         double deltaY = this.position.getY() - other.position.getY();
-        return !((-deltaY > this.extend.getY()) && !(deltaY > other.extend.getY()) ||
-                -deltaX > this.extend.getX() || deltaX > other.extend.getX());
+        if (-deltaX > this.extend.getX() || deltaX > other.extend.getX()) {
+            return false;
+        }
+        if (-deltaY > this.extend.getY() || deltaY > other.extend.getY()) {
+            return false;
+        }
+        return true;
+    }
+
+    public Point2D getDebugExtend() {
+        return this.extend;
+    }
+
+    public void move(Point2D direction) {
+        this.position = this.position.add(direction);
     }
 }

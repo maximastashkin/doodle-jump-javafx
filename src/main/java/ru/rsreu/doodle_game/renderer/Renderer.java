@@ -13,27 +13,23 @@ import java.util.List;
 public class Renderer {
     private final Canvas canvas;
     private final GraphicsContext graphicsContext;
-
     private final Image backgroundSprite;
 
-    private final List<GameObject> gameObjects = new ArrayList<>();
+    private List<GameObject> gameObjects;
 
-    public Renderer(Canvas canvas, Image backgroundSprite) {
+    public Renderer(Canvas canvas, Image backgroundSprite, List<GameObject> gameObjects) {
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.backgroundSprite = backgroundSprite;
+        this.gameObjects = gameObjects;
     }
 
-    public void addGameObject(GameObject gameObject) {
-        this.gameObjects.add(gameObject);
+    public List<GameObject> getGameObjects() {
+        return gameObjects;
     }
 
-    public void removeGameObject(GameObject gameObject) {
-        this.gameObjects.remove(gameObject);
-    }
-
-    public void clearGameObjects() {
-        this.gameObjects.clear();
+    public void setGameObjects(List<GameObject> gameObjects) {
+        this.gameObjects = gameObjects;
     }
 
     public void render() {
@@ -56,7 +52,14 @@ public class Renderer {
     }
 
     private void drawGameObject(GameObject gameObject) {
-        Point2D position = gameObject.getPosition();
+        Point2D position = gameObject.getDrawPosition();
+        this.graphicsContext.setFill(Color.LIGHTGREEN);
+        this.graphicsContext.fillRect(
+                gameObject.getDrawPosition().getX(),
+                gameObject.getDrawPosition().getY(),
+                gameObject.getRigidBody().getCollider().getDebugExtend().getX(),
+                gameObject.getRigidBody().getCollider().getDebugExtend().getY()
+        );
         this.graphicsContext.drawImage(
                 gameObject.getObjectSprite(),
                 position.getX(),
@@ -65,6 +68,4 @@ public class Renderer {
                 gameObject.getHeight()
         );
     }
-
-
 }
