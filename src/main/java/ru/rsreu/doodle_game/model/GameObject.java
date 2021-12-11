@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import ru.rsreu.doodle_game.physic.Collider;
 import ru.rsreu.doodle_game.physic.PhysicEngine;
 import ru.rsreu.doodle_game.physic.RigidBody;
+import ru.rsreu.doodle_game.physic.RigidBodyType;
 
 import java.util.List;
 
@@ -17,19 +18,16 @@ public class GameObject {
 
     private final Image objectSprite;
 
-    private final GameObjectType gameObjectType;
-
     public GameObject(
-            Image objectSprite, float scale, Point2D startPosition, GameObjectType gameObjectType) {
+            Image objectSprite, float scale, Point2D startPosition, RigidBodyType rigidBodyType) {
         this.objectSprite = objectSprite;
         this.scale = scale;
         this.width = objectSprite.getWidth() * scale;
         this.height = objectSprite.getHeight() * scale;
-        this.gameObjectType = gameObjectType;
         this.rigidBody = new RigidBody(
-                new Collider(startPosition, new Point2D(width, height)),
+                new Collider(startPosition, calculateColliderSizes(rigidBodyType)),
                 new Point2D(0, 0),
-                this.gameObjectType == GameObjectType.PLAYER);
+                rigidBodyType);
     }
 
     public RigidBody getRigidBody() {
@@ -60,11 +58,15 @@ public class GameObject {
         return this.rigidBody.getCollider().getDebugExtend();
     }
 
-    public GameObjectType getGameObjectType() {
-        return this.gameObjectType;
-    }
-
     public void update(PhysicEngine physicEngine, List<RigidBody> otherBodies) {
         this.rigidBody.getCollider().move(physicEngine.tryMoveRigidBody(rigidBody, otherBodies));
+    }
+
+    private Point2D calculateColliderSizes(RigidBodyType rigidBodyType) {
+        Point2D spriteSizes = new Point2D(this.width, this.height);
+        if (rigidBodyType == RigidBodyType.PLAYER) {
+            spriteSizes = spriteSizes.subtract(32, 0);
+        }
+        return spriteSizes;
     }
 }

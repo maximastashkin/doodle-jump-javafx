@@ -5,12 +5,14 @@ import javafx.geometry.Point2D;
 public class RigidBody {
     private final Collider collider;
     private Point2D velocity;
-    private final boolean isGravity;
+    private boolean isGravity;
+    private RigidBodyType rigidBodyType;
 
-    public RigidBody(Collider collider, Point2D startVelocity, boolean isGravity) {
+    public RigidBody(Collider collider, Point2D startVelocity, RigidBodyType rigidBodyType) {
         this.collider = collider;
         this.velocity = startVelocity;
-        this.isGravity = isGravity;
+        this.rigidBodyType = rigidBodyType;
+        this.isGravity = rigidBodyType == RigidBodyType.PLAYER;
     }
 
     public Collider getCollider() {
@@ -25,7 +27,19 @@ public class RigidBody {
         this.velocity = velocity.add(force);
     }
 
+    public void subtractForce(Point2D force) {
+        this.velocity = velocity.subtract(force);
+    }
+
     public boolean isGravity() {
         return this.isGravity;
+    }
+
+    public RigidBodyType getRigidBodyType() {
+        return rigidBodyType;
+    }
+
+    public void compensateXVelocity() {
+        this.velocity = new Point2D(0, velocity.getY());
     }
 }

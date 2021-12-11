@@ -9,8 +9,8 @@ import ru.rsreu.doodle_game.control.KeyPolling;
 import java.io.IOException;
 
 public class GameApplication extends Application {
-    private final static int WINDOW_WIDTH = 450;
-    private final static int WINDOW_HEIGHT = 750;
+    public final static int WINDOW_WIDTH = 450;
+    public final static int WINDOW_HEIGHT = 750;
 
     @Override
     public void start(Stage stage) throws IOException {

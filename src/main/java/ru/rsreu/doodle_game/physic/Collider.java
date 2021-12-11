@@ -25,10 +25,7 @@ public class Collider {
         if (-deltaX > this.extend.getX() || deltaX > other.extend.getX()) {
             return false;
         }
-        if (-deltaY > this.extend.getY() || deltaY > other.extend.getY()) {
-            return false;
-        }
-        return true;
+        return !(-deltaY > this.extend.getY()) && !(deltaY > other.extend.getY());
     }
 
     public Point2D getDebugExtend() {
