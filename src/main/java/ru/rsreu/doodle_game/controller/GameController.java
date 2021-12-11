@@ -33,7 +33,7 @@ public class GameController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         initialiseCanvas();
-        player.setPosition(200, 500);
+        player.setPosition(0, 0);
         Renderer renderer = new Renderer(this.gameCanvas, BACKGROUND_IMAGE);
         player.setScale(0.4f);
         renderer.addGameObject(player);

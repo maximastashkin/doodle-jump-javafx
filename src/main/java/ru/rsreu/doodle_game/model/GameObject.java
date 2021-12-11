@@ -10,7 +10,7 @@ public class GameObject {
     private final double width;
     private final double height;
 
-    Image objectSprite;
+    private final Image objectSprite;
 
     public GameObject(Image objectSprite) {
         this.objectSprite = objectSprite;
@@ -25,6 +25,9 @@ public class GameObject {
     public void setPosition(float x, float y) {
         this.position = new Point2D(x, y);
     }
+    // collider have position
+    // rigidbody have collider
+    // game_object have rigidbody
 
     public void rotate(float rotation) {
         this.rotation += rotation;
