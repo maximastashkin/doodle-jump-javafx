@@ -2,6 +2,7 @@ package ru.rsreu.doodle_game.control;
 
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import ru.rsreu.doodle_game.physic.PhysicEngine;
 import ru.rsreu.doodle_game.physic.RigidBody;
 
 public class PlayerControl {
@@ -18,18 +19,25 @@ public class PlayerControl {
     }
 
     public void controlPlayer(RigidBody playerRigidBody) {
-        if (keyPolling.isClear()) {
+        if (!(keyPolling.isDown(KeyCode.RIGHT) || keyPolling.isDown(KeyCode.LEFT))) {
             playerRigidBody.compensateXVelocity();
-        }
-        if (keyPolling.isDown(KeyCode.RIGHT)) {
-            if (playerRigidBody.getVelocity().getX() <= 0) {
-                playerRigidBody.addForce(MOVEMENT_FORCE);
+        } else {
+            if (keyPolling.isDown(KeyCode.RIGHT)) {
+                if (playerRigidBody.getVelocity().getX() <= 0) {
+                    playerRigidBody.addForce(MOVEMENT_FORCE);
+                }
+            }
+            if (keyPolling.isDown(KeyCode.LEFT)) {
+                if (playerRigidBody.getVelocity().getX() >= 0) {
+                    playerRigidBody.subtractForce(MOVEMENT_FORCE);
+                }
             }
         }
-        if (keyPolling.isDown(KeyCode.LEFT)) {
-            if (playerRigidBody.getVelocity().getX() >= 0) {
-                playerRigidBody.subtractForce(MOVEMENT_FORCE);
-            }
+        if (keyPolling.isDown(KeyCode.SPACE)) {
+            PhysicEngine.JUMP_FORCE = new Point2D(0, -12);
+        }
+        if (keyPolling.isDown(KeyCode.BACK_SPACE)) {
+            PhysicEngine.JUMP_FORCE = new Point2D(0, -20);
         }
     }
 }

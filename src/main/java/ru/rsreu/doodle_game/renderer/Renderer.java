@@ -7,7 +7,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import ru.rsreu.doodle_game.model.GameObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Renderer {

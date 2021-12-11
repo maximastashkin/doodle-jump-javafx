@@ -3,8 +3,10 @@ package ru.rsreu.doodle_game.physic;
 import javafx.geometry.Point2D;
 
 public class Collider {
+    private final static float PLATFORM_COLLIDER_BUFFER_HEIGHT = 13f;
+
     private Point2D position;
-    private Point2D extend;
+    private final Point2D extend;
 
     public Collider(Point2D position, Point2D extend) {
         this.position = position;
@@ -26,6 +28,13 @@ public class Collider {
             return false;
         }
         return !(-deltaY > this.extend.getY()) && !(deltaY > other.extend.getY());
+    }
+
+    public boolean isUpperCollideWith(Collider other) {
+        double thisLeftBottomY = this.position.getY() + this.extend.getY();
+        double otherLeftBottomY = other.position.getY() + other.extend.getY();
+        return thisLeftBottomY > other.position.getY() && thisLeftBottomY <
+                otherLeftBottomY + PLATFORM_COLLIDER_BUFFER_HEIGHT;
     }
 
     public Point2D getDebugExtend() {

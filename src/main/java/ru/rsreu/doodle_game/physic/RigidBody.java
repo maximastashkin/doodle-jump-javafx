@@ -3,6 +3,8 @@ package ru.rsreu.doodle_game.physic;
 import javafx.geometry.Point2D;
 
 public class RigidBody {
+    private final static float FALLING_SPEED = 4f;
+
     private final Collider collider;
     private Point2D velocity;
     private boolean isGravity;
@@ -36,10 +38,14 @@ public class RigidBody {
     }
 
     public RigidBodyType getRigidBodyType() {
-        return rigidBodyType;
+        return this.rigidBodyType;
     }
 
     public void compensateXVelocity() {
         this.velocity = new Point2D(0, velocity.getY());
+    }
+
+    public boolean isFalling() {
+        return this.velocity.getY() > FALLING_SPEED;
     }
 }

@@ -42,26 +42,7 @@ public class GameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        GameObject platform = new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))), 1.5f,
-                new Point2D(20, 700), RigidBodyType.PLATFORM
-        );
-        GameObject platform1 = new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))), 1.5f,
-                new Point2D(250, 380), RigidBodyType.PLATFORM
-        );
-        GameObject platform2 = new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))), 1.5f,
-                new Point2D(30, 345), RigidBodyType.PLATFORM
-        );
-        GameObject platform3 = new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))), 1.5f,
-                new Point2D(350, 380), RigidBodyType.PLATFORM
-        );
-        gameObjects.add(platform);
-        gameObjects.add(platform1);
-        gameObjects.add(platform2);
-        gameObjects.add(platform3);
+        generateDebugPlatforms();
         gameObjects.add(player);
         initialiseCanvas();
         Renderer renderer = new Renderer(this.gameCanvas, BACKGROUND_IMAGE, gameObjects);
@@ -93,5 +74,68 @@ public class GameController implements Initializable {
                 .map(GameObject::getRigidBody)
                 .filter(rigidBody -> rigidBody.getRigidBodyType() != RigidBodyType.PLAYER)
                 .collect(Collectors.toList());
+    }
+
+    private void generateDebugPlatforms() {
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(0, 700),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(100, 700),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(200, 700),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(300, 700),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(400, 700),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(0, 700-190),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(100, 700-150),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(100, 700-150-185),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(200, 700-150),
+                RigidBodyType.PLATFORM
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                1.5f,
+                new Point2D(200, 700-150-505),
+                RigidBodyType.PLATFORM
+        ));
     }
 }

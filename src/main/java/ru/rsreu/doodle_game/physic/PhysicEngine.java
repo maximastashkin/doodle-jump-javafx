@@ -6,8 +6,10 @@ import ru.rsreu.doodle_game.GameApplication;
 import java.util.List;
 
 public class PhysicEngine {
+    // 185 max-height doodler jump for -12 jump force!!!!!!!!!!
+    // 655 max-height doodler jump for -20 jump force!!!!!!!!!!
     private final static Point2D GRAVITY_FORCE = new Point2D(0, 0.4f);
-    private final static Point2D JUMP_FORCE = new Point2D(0, -14);
+    public static Point2D JUMP_FORCE = new Point2D(0, -12);
 
     private final static int LEFT_SCREEN_BORDER_COORDINATE = -30;
     private final static int RIGHT_SCREEN_BORDER_COORDINATE = GameApplication.WINDOW_WIDTH - 30;
@@ -21,7 +23,9 @@ public class PhysicEngine {
             applyScreenTransition(rigidBody.getCollider(), rigidBody.getVelocity());
             applyGravity(rigidBody);
             otherBodies.forEach(otherBody -> {
-                if(rigidBody.getCollider().isCollideWith(otherBody.getCollider())) {
+                if(rigidBody.getCollider().isCollideWith(otherBody.getCollider())
+                        && rigidBody.getCollider().isUpperCollideWith(otherBody.getCollider())
+                        && rigidBody.isFalling()) {
                     applyJump(rigidBody);
                 }
             });
