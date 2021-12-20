@@ -1,10 +1,10 @@
-package ru.rsreu.doodle_game;
+package ru.rsreu.doodle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ru.rsreu.doodle_game.control.KeyPolling;
+import ru.rsreu.doodle.control.KeyPolling;
 
 import java.io.IOException;
 

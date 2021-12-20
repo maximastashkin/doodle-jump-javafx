@@ -3,10 +3,10 @@ module ru.rsreu.doodle_game {
     requires javafx.fxml;
 
 
-    opens ru.rsreu.doodle_game to javafx.fxml;
-    exports ru.rsreu.doodle_game;
-    exports ru.rsreu.doodle_game.controller;
-    exports ru.rsreu.doodle_game.physic;
-    exports ru.rsreu.doodle_game.model;
-    opens ru.rsreu.doodle_game.controller to javafx.fxml;
+    opens ru.rsreu.doodle to javafx.fxml;
+    exports ru.rsreu.doodle;
+    exports ru.rsreu.doodle.controller;
+    exports ru.rsreu.doodle.physic;
+    exports ru.rsreu.doodle.model;
+    opens ru.rsreu.doodle.controller to javafx.fxml;
 }

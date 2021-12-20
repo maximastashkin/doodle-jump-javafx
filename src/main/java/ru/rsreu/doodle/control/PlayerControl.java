@@ -1,9 +1,9 @@
-package ru.rsreu.doodle_game.control;
+package ru.rsreu.doodle.control;
 
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
-import ru.rsreu.doodle_game.physic.PhysicEngine;
-import ru.rsreu.doodle_game.physic.RigidBody;
+import ru.rsreu.doodle.physic.PhysicEngine;
+import ru.rsreu.doodle.physic.RigidBody;
 
 public class PlayerControl {
     private final static Point2D MOVEMENT_FORCE = new Point2D(5f, 0);

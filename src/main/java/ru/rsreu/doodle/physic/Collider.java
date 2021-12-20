@@ -1,4 +1,4 @@
-package ru.rsreu.doodle_game.physic;
+package ru.rsreu.doodle.physic;
 
 import javafx.geometry.Point2D;
 
@@ -11,14 +11,6 @@ public class Collider {
     public Collider(Point2D position, Point2D extend) {
         this.position = position;
         this.extend = extend;
-    }
-
-    public Point2D getPosition() {
-        return position;
-    }
-
-    public void setPosition(Point2D position) {
-        this.position = position;
     }
 
     public boolean isCollideWith(Collider other) {
@@ -37,11 +29,24 @@ public class Collider {
                 otherLeftBottomY + PLATFORM_COLLIDER_BUFFER_HEIGHT;
     }
 
+    public void move(Point2D direction) {
+        this.position = this.position.add(direction);
+    }
+
+    public Point2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    // Use for draw collider. Will be removed!!!!!!!!!!
     public Point2D getDebugExtend() {
         return this.extend;
     }
 
-    public void move(Point2D direction) {
-        this.position = this.position.add(direction);
+    public Point2D getPositionAddExtend() {
+        return this.position.add(extend);
     }
 }

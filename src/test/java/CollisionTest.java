@@ -2,7 +2,7 @@ import javafx.geometry.Point2D;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import ru.rsreu.doodle_game.physic.Collider;
+import ru.rsreu.doodle.physic.Collider;
 
 public class CollisionTest {
 

@@ -1,11 +1,11 @@
-package ru.rsreu.doodle_game.renderer;
+package ru.rsreu.doodle.renderer;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import ru.rsreu.doodle_game.model.GameObject;
+import ru.rsreu.doodle.model.GameObject;
 
 import java.util.List;
 
@@ -21,10 +21,6 @@ public class Renderer {
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.backgroundSprite = backgroundSprite;
         this.gameObjects = gameObjects;
-    }
-
-    public List<GameObject> getGameObjects() {
-        return gameObjects;
     }
 
     public void setGameObjects(List<GameObject> gameObjects) {

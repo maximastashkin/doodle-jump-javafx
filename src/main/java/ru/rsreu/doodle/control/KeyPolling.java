@@ -1,4 +1,4 @@
-package ru.rsreu.doodle_game.control;
+package ru.rsreu.doodle.control;
 
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;

@@ -1,4 +1,4 @@
-package ru.rsreu.doodle_game.loop;
+package ru.rsreu.doodle.loop;
 
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.DoubleProperty;
