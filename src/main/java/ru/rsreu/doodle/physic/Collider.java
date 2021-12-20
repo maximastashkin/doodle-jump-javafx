@@ -33,6 +33,11 @@ public class Collider {
         this.position = this.position.add(direction);
     }
 
+    public Point2D getCenter() {
+        return new Point2D(this.position.getX() + this.extend.getX() / 2,
+                this.position.getY() + this.extend.getY() / 2);
+    }
+
     public Point2D getPosition() {
         return position;
     }

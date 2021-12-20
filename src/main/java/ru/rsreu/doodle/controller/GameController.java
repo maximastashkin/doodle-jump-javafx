@@ -85,6 +85,36 @@ public class GameController implements Initializable {
         gameObjects.add(new GameObject(
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
                 RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(300, 0)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(200, 100)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(150, 200)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(160, 250)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(160, 360)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
+                new Point2D(300, 320)
+        ));
+        gameObjects.add(new GameObject(
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                RigidBodyType.PLATFORM, 1.5f,
                 new Point2D(100, 700)
         ));
         gameObjects.add(new GameObject(
@@ -103,13 +133,13 @@ public class GameController implements Initializable {
                 new Point2D(400, 700)
         ));
         gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/moving_platform.png"))),
                 RigidBodyType.MOVING_PLATFORM, 1.5f,
                 new Point2D(100, 600)
         ));
 
         gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
+                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/moving_platform.png"))),
                 RigidBodyType.MOVING_PLATFORM, 1.5f,
                 new Point2D(300, 550)
         ));

@@ -27,6 +27,10 @@ public class RigidBody {
         this.velocity = new Point2D(0, velocity.getY());
     }
 
+    public void compensateYVelocity() {
+        this.velocity = new Point2D(velocity.getX(), 0);
+    }
+
     public boolean isFalling(float fallingSpeed) {
         return this.velocity.getY() > fallingSpeed;
     }
