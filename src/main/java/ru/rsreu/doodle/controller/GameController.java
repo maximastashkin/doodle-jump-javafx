@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class GameController implements Initializable {
+    public final static float PLAYER_SPRITE_NOISE_DELTA = 32f;
     public final static Image DOODLER_SPRITE = new Image(
             Objects.requireNonNull(GameController.class.getResourceAsStream("/img/doodler.png")));
     public final static Image JUMPING_DOODLER_SPRITE = new Image(

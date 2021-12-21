@@ -13,14 +13,12 @@ import java.util.List;
 public class GameObject {
     private Image objectSprite;
     private final RigidBody rigidBody;
-    private final float scale;
     private final double width;
     private final double height;
 
     public GameObject(
             Image objectSprite, RigidBodyType rigidBodyType, float scale, Point2D startPosition) {
         this.objectSprite = objectSprite;
-        this.scale = scale;
         this.width = objectSprite.getWidth() * scale;
         this.height = objectSprite.getHeight() * scale;
         this.rigidBody = new RigidBody(
@@ -32,7 +30,7 @@ public class GameObject {
     private Point2D calculateColliderSizes(RigidBodyType rigidBodyType) {
         Point2D spriteSizes = new Point2D(this.width, this.height);
         if (rigidBodyType == RigidBodyType.PLAYER) {
-            spriteSizes = spriteSizes.subtract(32, 0);
+            spriteSizes = spriteSizes.subtract(GameController.PLAYER_SPRITE_NOISE_DELTA, 0);
         }
         return spriteSizes;
     }
@@ -44,15 +42,23 @@ public class GameObject {
 
     private void applyAnimation() {
         if (this.rigidBody.getRigidBodyType() == RigidBodyType.PLAYER) {
-            if (!this.rigidBody.isFalling(PhysicEngine.FALLING_SPEED)) {
-                this.objectSprite = GameController.JUMPING_DOODLER_SPRITE;
-            } else {
-                this.objectSprite = GameController.DOODLER_SPRITE;
-            }
+            applyPlayerAnimation();
         }
         if (this.rigidBody.getRigidBodyType() == RigidBodyType.BROKEN_PLATFORM) {
-            this.objectSprite = GameController.BROKEN_PLATFORM_SPRITE;
+            applyPlatformAnimation();
         }
+    }
+
+    private void applyPlayerAnimation() {
+        if (!this.rigidBody.isFalling(PhysicEngine.FALLING_SPEED)) {
+            this.objectSprite = GameController.JUMPING_DOODLER_SPRITE;
+        } else {
+            this.objectSprite = GameController.DOODLER_SPRITE;
+        }
+    }
+
+    private void applyPlatformAnimation() {
+        this.objectSprite = GameController.BROKEN_PLATFORM_SPRITE;
     }
 
     public Image getObjectSprite() {
@@ -63,9 +69,6 @@ public class GameObject {
         return this.rigidBody;
     }
 
-    public float getScale() {
-        return this.scale;
-    }
 
     public double getWidth() {
         return this.width;

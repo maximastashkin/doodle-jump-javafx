@@ -48,6 +48,7 @@ public class Renderer {
         if (this.backgroundSprite != null) {
             this.graphicsContext.drawImage(this.backgroundSprite, 0, 0);
         }
+        //!debug!!!!!!
         this.graphicsContext.setStroke(Color.BLACK);
         this.graphicsContext.setLineWidth(2);
         this.graphicsContext.moveTo(0, GameApplication.WINDOW_HEIGHT / 2f);
