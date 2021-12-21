@@ -4,13 +4,14 @@ import javafx.geometry.Point2D;
 
 public class Collider {
     private final static float PLATFORM_COLLIDER_BUFFER_HEIGHT = 13f;
-
-    private Point2D position;
     private final Point2D extend;
+    private Point2D position;
+    private float rotation;
 
     public Collider(Point2D position, Point2D extend) {
         this.position = position;
         this.extend = extend;
+        this.rotation = 0;
     }
 
     public boolean isCollideWith(Collider other) {
@@ -53,5 +54,13 @@ public class Collider {
 
     public Point2D getPositionAddExtend() {
         return this.position.add(extend);
+    }
+
+    public float getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(float rotation) {
+        this.rotation = rotation;
     }
 }

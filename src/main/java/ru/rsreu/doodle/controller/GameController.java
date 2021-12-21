@@ -22,8 +22,17 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class GameController implements Initializable {
+    public final static Image DOODLER_SPRITE = new Image(
+            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/doodler.png")));
+    public final static Image JUMPING_DOODLER_SPRITE = new Image(
+            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/jumping_doodler.png")));
+    public final static Image BREAKING_PLATFORM_SPRITE = new Image(
+            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/breaking_platform.png")));
+    public final static Image BROKEN_PLATFORM_SPRITE = new Image(
+            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/broken_platform.png")));
     private final static Image BACKGROUND_IMAGE =
             new Image(Objects.requireNonNull(GameController.class.getResourceAsStream("/img/background.png")));
+
     private final static PhysicEngine PHYSIC_ENGINE = new PhysicEngine();
 
     @FXML
@@ -34,8 +43,7 @@ public class GameController implements Initializable {
 
     private final List<GameObject> gameObjects = new ArrayList<>();
 
-    private final GameObject player = new GameObject(
-            new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/doodler.png"))), RigidBodyType.PLAYER, 0.4f,
+    private final GameObject player = new GameObject(DOODLER_SPRITE, RigidBodyType.PLAYER, 0.4f,
             new Point2D(50, 0));
 
     private final PlayerControl playerControl = PlayerControl.getInstance();
@@ -147,7 +155,7 @@ public class GameController implements Initializable {
         gameObjects.add(new GameObject(
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/breaking_platform.png"))),
                 RigidBodyType.BREAKING_PLATFORM, 1.5f,
-                new Point2D(300, 510)
+                new Point2D(150, 450)
         ));
     }
 }

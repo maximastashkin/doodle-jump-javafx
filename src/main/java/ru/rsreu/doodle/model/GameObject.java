@@ -2,6 +2,7 @@ package ru.rsreu.doodle.model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
+import ru.rsreu.doodle.controller.GameController;
 import ru.rsreu.doodle.physic.Collider;
 import ru.rsreu.doodle.physic.PhysicEngine;
 import ru.rsreu.doodle.physic.RigidBody;
@@ -10,7 +11,7 @@ import ru.rsreu.doodle.physic.RigidBodyType;
 import java.util.List;
 
 public class GameObject {
-    private final Image objectSprite;
+    private Image objectSprite;
     private final RigidBody rigidBody;
     private final float scale;
     private final double width;
@@ -38,6 +39,20 @@ public class GameObject {
 
     public void update(PhysicEngine physicEngine, List<RigidBody> otherBodies) {
         this.rigidBody.getCollider().move(physicEngine.tryMoveRigidBody(rigidBody, otherBodies));
+        applyAnimation();
+    }
+
+    private void applyAnimation() {
+        if (this.rigidBody.getRigidBodyType() == RigidBodyType.PLAYER) {
+            if (!this.rigidBody.isFalling(PhysicEngine.FALLING_SPEED)) {
+                this.objectSprite = GameController.JUMPING_DOODLER_SPRITE;
+            } else {
+                this.objectSprite = GameController.DOODLER_SPRITE;
+            }
+        }
+        if (this.rigidBody.getRigidBodyType() == RigidBodyType.BROKEN_PLATFORM) {
+            this.objectSprite = GameController.BROKEN_PLATFORM_SPRITE;
+        }
     }
 
     public Image getObjectSprite() {

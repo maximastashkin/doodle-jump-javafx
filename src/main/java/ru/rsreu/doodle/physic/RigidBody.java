@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 
 public class RigidBody {
     private final Collider collider;
-    private final RigidBodyType rigidBodyType;
+    private RigidBodyType rigidBodyType;
     private Point2D velocity;
     private boolean isGravity;
 
@@ -41,6 +41,10 @@ public class RigidBody {
 
     public RigidBodyType getRigidBodyType() {
         return this.rigidBodyType;
+    }
+
+    public void setRigidBodyType(RigidBodyType rigidBodyType) {
+        this.rigidBodyType = rigidBodyType;
     }
 
     public boolean isGravity() {

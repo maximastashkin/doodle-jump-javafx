@@ -1,12 +1,15 @@
 package ru.rsreu.doodle.renderer;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Point3D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 import ru.rsreu.doodle.GameApplication;
 import ru.rsreu.doodle.model.GameObject;
+import ru.rsreu.doodle.physic.Collider;
 
 import java.util.List;
 
@@ -43,7 +46,7 @@ public class Renderer {
 
     private void drawBackground() {
         if (this.backgroundSprite != null) {
-            this.graphicsContext.drawImage(this.backgroundSprite, 0 ,0);
+            this.graphicsContext.drawImage(this.backgroundSprite, 0, 0);
         }
         this.graphicsContext.setStroke(Color.BLACK);
         this.graphicsContext.setLineWidth(2);
@@ -62,6 +65,7 @@ public class Renderer {
                 gameObject.getRigidBody().getCollider().getDebugExtend().getX(),
                 gameObject.getRigidBody().getCollider().getDebugExtend().getY()
         );
+        transformContext(gameObject.getRigidBody().getCollider());
         this.graphicsContext.drawImage(
                 gameObject.getObjectSprite(),
                 position.getX(),
@@ -72,5 +76,12 @@ public class Renderer {
         //debug!!!!!!
         this.graphicsContext.setFill(Color.RED);
         this.graphicsContext.fillRect(gameObject.getRigidBody().getCollider().getCenter().getX() - 2, gameObject.getRigidBody().getCollider().getCenter().getY() - 2, 4, 4);
+    }
+
+    private void transformContext(Collider collider) {
+        Rotate rotate = new Rotate(collider.getRotation(), collider.getCenter().getX(), collider.getCenter().getY());
+        rotate.setAxis(new Point3D(0, 1, 0));
+        graphicsContext.setTransform(
+                rotate.getMxx(), rotate.getMyx(), rotate.getMxy(), rotate.getMyy(), rotate.getTx(), rotate.getTy());
     }
 }

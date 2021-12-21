@@ -4,5 +4,6 @@ public enum RigidBodyType {
     PLAYER,
     PLATFORM,
     MOVING_PLATFORM,
-    BREAKING_PLATFORM
+    BREAKING_PLATFORM,
+    BROKEN_PLATFORM
 }
