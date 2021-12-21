@@ -7,9 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
-import ru.rsreu.doodle.GameApplication;
-import ru.rsreu.doodle.model.GameObject;
 import ru.rsreu.doodle.logic.Collider;
+import ru.rsreu.doodle.model.GameObject;
 
 import java.util.List;
 
@@ -18,16 +17,12 @@ public class Renderer {
     private final GraphicsContext graphicsContext;
     private final Image backgroundSprite;
 
-    private List<GameObject> gameObjects;
+    private final List<GameObject> gameObjects;
 
     public Renderer(Canvas canvas, Image backgroundSprite, List<GameObject> gameObjects) {
         this.canvas = canvas;
         this.graphicsContext = canvas.getGraphicsContext2D();
         this.backgroundSprite = backgroundSprite;
-        this.gameObjects = gameObjects;
-    }
-
-    public void setGameObjects(List<GameObject> gameObjects) {
         this.gameObjects = gameObjects;
     }
 
@@ -48,24 +43,11 @@ public class Renderer {
         if (this.backgroundSprite != null) {
             this.graphicsContext.drawImage(this.backgroundSprite, 0, 0);
         }
-        //!debug!!!!!!
-        this.graphicsContext.setStroke(Color.BLACK);
-        this.graphicsContext.setLineWidth(2);
-        this.graphicsContext.moveTo(0, GameApplication.WINDOW_HEIGHT / 2f);
-        this.graphicsContext.lineTo(GameApplication.WINDOW_WIDTH, GameApplication.WINDOW_HEIGHT / 2f);
-        this.graphicsContext.stroke();
     }
 
     private void drawGameObject(GameObject gameObject) {
         Point2D position = gameObject.getDrawPosition();
         this.graphicsContext.setFill(Color.LIGHTGREEN);
-        //debug!!!!!!
-        /*this.graphicsContext.fillRect(
-                gameObject.getDrawPosition().getX(),
-                gameObject.getDrawPosition().getY(),
-                gameObject.getRigidBody().getCollider().getDebugExtend().getX(),
-                gameObject.getRigidBody().getCollider().getDebugExtend().getY()
-        );*/
         transformContext(gameObject.getRigidBody().getCollider());
         this.graphicsContext.drawImage(
                 gameObject.getObjectSprite(),
@@ -74,9 +56,6 @@ public class Renderer {
                 gameObject.getWidth(),
                 gameObject.getHeight()
         );
-        //debug!!!!!!
-//        this.graphicsContext.setFill(Color.RED);
-//        this.graphicsContext.fillRect(gameObject.getRigidBody().getCollider().getCenter().getX() - 2, gameObject.getRigidBody().getCollider().getCenter().getY() - 2, 4, 4);
     }
 
     private void transformContext(Collider collider) {

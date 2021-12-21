@@ -47,11 +47,6 @@ public class Collider {
         this.position = position;
     }
 
-    // Use for draw collider. Will be removed!!!!!!!!!!
-    public Point2D getDebugExtend() {
-        return this.extend;
-    }
-
     public Point2D getPositionAddExtend() {
         return this.position.add(extend);
     }

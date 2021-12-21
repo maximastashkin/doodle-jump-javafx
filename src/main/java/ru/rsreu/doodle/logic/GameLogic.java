@@ -7,20 +7,17 @@ import java.util.List;
 import java.util.Random;
 
 public class GameLogic {
+    public final static float FALLING_SPEED = 3f;
     public final static Point2D MOVEMENT_FORCE = new Point2D(5f, 0);
-    public final static float FALLING_SPEED = 4f;
     private final static float SUFFICIENT_Y_VELOCITY_FOR_SCROLLING = -6f;
-    // 185 max-height doodler jump for -12 jump force!!!!!!!!!!
-    // 655 max-height doodler jump for -20 jump force!!!!!!!!!!
     private final static boolean SUBJECT_TO_GRAVITY = true;
     private final static Point2D PLAYER_GRAVITY_FORCE = new Point2D(0, 0.4f);
     private final static Point2D PLATFORM_GRAVITY_FORCE = new Point2D(0, 0.15f);
+    private final static Point2D JUMP_FORCE = new Point2D(0, -12);
+
     private final static float LEFT_SCREEN_BORDER_COORDINATE = -30;
     private final static float RIGHT_SCREEN_BORDER_COORDINATE = GameApplication.WINDOW_WIDTH - 30;
     private final static float MIDDLE_SCREEN_LINE_Y_COORDINATE = GameApplication.WINDOW_HEIGHT / 2f;
-
-    //Debug!!!!, will make private
-    public static Point2D JUMP_FORCE = new Point2D(0, -12);
 
     private int gameScore = 0;
 
@@ -136,8 +133,8 @@ public class GameLogic {
         playerRigidBody.setGravity(SUBJECT_TO_GRAVITY);
     }
 
-    private void updateGameScore(double playerYVelocity) {
-        gameScore += playerYVelocity;
+    private void updateGameScore(double platformYVelocity) {
+        this.gameScore += platformYVelocity;
     }
 
     private void applyPlatformMove(RigidBody rigidBody) {

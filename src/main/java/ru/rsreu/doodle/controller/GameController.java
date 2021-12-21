@@ -7,12 +7,14 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import ru.rsreu.doodle.GameApplication;
 import ru.rsreu.doodle.control.PlayerControl;
-import ru.rsreu.doodle.loop.GameLoopTimer;
-import ru.rsreu.doodle.model.GameObject;
-import ru.rsreu.doodle.logic.RigidBodyType;
+import ru.rsreu.doodle.generator.PlatformsGenerator;
 import ru.rsreu.doodle.logic.GameLogic;
 import ru.rsreu.doodle.logic.RigidBody;
+import ru.rsreu.doodle.logic.RigidBodyType;
+import ru.rsreu.doodle.loop.GameLoopTimer;
+import ru.rsreu.doodle.model.GameObject;
 import ru.rsreu.doodle.renderer.Renderer;
 
 import java.net.URL;
@@ -23,19 +25,23 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class GameController implements Initializable {
-    public final static float PLAYER_SPRITE_NOISE_DELTA = 32f;
-    public final static Image DOODLER_SPRITE = new Image(
-            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/doodler.png")));
-    public final static Image JUMPING_DOODLER_SPRITE = new Image(
-            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/jumping_doodler.png")));
-    public final static Image BREAKING_PLATFORM_SPRITE = new Image(
-            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/breaking_platform.png")));
-    public final static Image BROKEN_PLATFORM_SPRITE = new Image(
-            Objects.requireNonNull(GameController.class.getResourceAsStream("/img/broken_platform.png")));
+    public final static float DOODLER_SPRITE_NOISE_DELTA = 32f;
+    public final static float DOODLER_SPRITE_SCALE = 0.4f;
+    public final static float PLATFORM_SPRITE_SCALE = 1.5f;
+
     private final static Image BACKGROUND_IMAGE =
             new Image(Objects.requireNonNull(GameController.class.getResourceAsStream("/img/background.png")));
 
     private final static GameLogic GAME_LOGIC = new GameLogic();
+
+    private final List<GameObject> gameObjects = new ArrayList<>();
+
+    private final GameObject player = new GameObject(RigidBodyType.PLAYER.getSprite(),
+            RigidBodyType.PLAYER, DOODLER_SPRITE_SCALE, new Point2D(50, 0));
+
+    private final PlayerControl playerControl = PlayerControl.getInstance();
+
+    private final PlatformsGenerator platformsGenerator = new PlatformsGenerator();
 
     @FXML
     public AnchorPane gameAnchor;
@@ -44,20 +50,10 @@ public class GameController implements Initializable {
     @FXML
     public Label scoreLabel;
 
-    private final List<GameObject> gameObjects = new ArrayList<>();
-
-    private final GameObject player = new GameObject(DOODLER_SPRITE, RigidBodyType.PLAYER, 0.4f,
-            new Point2D(50, 0));
-
-    private final PlayerControl playerControl = PlayerControl.getInstance();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        generateDebugPlatforms();
-        gameObjects.add(player);
         initialiseCanvas();
         Renderer renderer = new Renderer(this.gameCanvas, BACKGROUND_IMAGE, gameObjects);
-
         GameLoopTimer gameLoopTimer = new GameLoopTimer() {
             @Override
             public void tick(float secondSinceLastFrame) {
@@ -71,13 +67,33 @@ public class GameController implements Initializable {
     }
 
     private void initialiseCanvas() {
+        gameObjects.addAll(platformsGenerator.generateNextPlatforms(10000));
+        gameObjects.add(player);
         gameCanvas.widthProperty().bind(gameAnchor.widthProperty());
         gameCanvas.heightProperty().bind(gameAnchor.heightProperty());
     }
 
     private void updateGameObjects() {
         List<RigidBody> rigidBodiesWithoutPlayer = this.getRigidBodiesWithoutPlayer();
-        gameObjects.forEach(gameObject -> gameObject.update(GAME_LOGIC, rigidBodiesWithoutPlayer));
+        List<GameObject> gameObjectsForDeleting = new ArrayList<>();
+        gameObjects.forEach(gameObject -> {
+            if (gameObject.getDrawPosition().getY() > GameApplication.WINDOW_HEIGHT) {
+                gameObjectsForDeleting.add(gameObject);
+            } else {
+                gameObject.update(GAME_LOGIC, rigidBodiesWithoutPlayer);
+            }
+        });
+        deleteGameObjects(gameObjectsForDeleting);
+    }
+
+    private void deleteGameObjects(List<GameObject> gameObjectsForDeleting) {
+        List<GameObject> buffer = new ArrayList<>(gameObjects);
+        gameObjects.clear();
+        buffer.forEach(gameObject -> {
+            if (!gameObjectsForDeleting.contains(gameObject)) {
+                gameObjects.add(gameObject);
+            }
+        });
     }
 
     private List<RigidBody> getRigidBodiesWithoutPlayer() {
@@ -86,81 +102,6 @@ public class GameController implements Initializable {
                 .map(GameObject::getRigidBody)
                 .filter(rigidBody -> rigidBody.getRigidBodyType() != RigidBodyType.PLAYER)
                 .collect(Collectors.toList());
-    }
-
-    private void generateDebugPlatforms() {
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(0, 700)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(300, 0)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(200, 100)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(150, 200)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(160, 250)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(160, 360)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(300, 320)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(100, 700)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(200, 700)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(300, 700)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/platform.png"))),
-                RigidBodyType.PLATFORM, 1.5f,
-                new Point2D(400, 700)
-        ));
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/moving_platform.png"))),
-                RigidBodyType.MOVING_PLATFORM, 1.5f,
-                new Point2D(100, 600)
-        ));
-
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/moving_platform.png"))),
-                RigidBodyType.MOVING_PLATFORM, 1.5f,
-                new Point2D(300, 550)
-        ));
-
-        gameObjects.add(new GameObject(
-                new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/breaking_platform.png"))),
-                RigidBodyType.BREAKING_PLATFORM, 1.5f,
-                new Point2D(125, 450)
-        ));
     }
 
     private void updateGameScore() {

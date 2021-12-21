@@ -47,14 +47,10 @@ public class KeyPolling {
         return KEY_CURRENTLY_DOWN.contains(keyCode);
     }
 
-    public boolean isClear() {
-        return KEY_CURRENTLY_DOWN.isEmpty();
-    }
-
     @Override
     public String toString() {
         StringBuilder keysDown = new StringBuilder("KeyPolling on scene (").append(scene).append("):");
-        KEY_CURRENTLY_DOWN.forEach (keyCode -> keysDown.append((keyCode.getName())).append(" "));
+        KEY_CURRENTLY_DOWN.forEach(keyCode -> keysDown.append((keyCode.getName())).append(" "));
         return keysDown.toString();
     }
 }

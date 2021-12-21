@@ -9,12 +9,14 @@ import ru.rsreu.doodle.logic.RigidBody;
 import ru.rsreu.doodle.logic.RigidBodyType;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GameObject {
-    private Image objectSprite;
+    public final static float SUFFICIENT_Y_VELOCITY_FOR_JUMPING_ANIMATION = 0f;
     private final RigidBody rigidBody;
     private final double width;
     private final double height;
+    private Image objectSprite;
 
     public GameObject(
             Image objectSprite, RigidBodyType rigidBodyType, float scale, Point2D startPosition) {
@@ -30,7 +32,7 @@ public class GameObject {
     private Point2D calculateColliderSizes(RigidBodyType rigidBodyType) {
         Point2D spriteSizes = new Point2D(this.width, this.height);
         if (rigidBodyType == RigidBodyType.PLAYER) {
-            spriteSizes = spriteSizes.subtract(GameController.PLAYER_SPRITE_NOISE_DELTA, 0);
+            spriteSizes = spriteSizes.subtract(GameController.DOODLER_SPRITE_NOISE_DELTA, 0);
         }
         return spriteSizes;
     }
@@ -50,15 +52,15 @@ public class GameObject {
     }
 
     private void applyPlayerAnimation() {
-        if (!this.rigidBody.isFalling(GameLogic.FALLING_SPEED)) {
-            this.objectSprite = GameController.JUMPING_DOODLER_SPRITE;
+        if (this.rigidBody.getVelocity().getY() <= SUFFICIENT_Y_VELOCITY_FOR_JUMPING_ANIMATION) {
+            this.objectSprite = RigidBodyType.JUMPING_PLAYER.getSprite();
         } else {
-            this.objectSprite = GameController.DOODLER_SPRITE;
+            this.objectSprite = RigidBodyType.PLAYER.getSprite();
         }
     }
 
     private void applyPlatformAnimation() {
-        this.objectSprite = GameController.BROKEN_PLATFORM_SPRITE;
+        this.objectSprite = this.getRigidBody().getRigidBodyType().getSprite();
     }
 
     public Image getObjectSprite() {
@@ -80,5 +82,21 @@ public class GameObject {
 
     public Point2D getDrawPosition() {
         return this.rigidBody.getCollider().getPosition();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameObject that = (GameObject) o;
+        return Double.compare(that.width, width) == 0
+                && Double.compare(that.height, height) == 0
+                && Objects.equals(objectSprite, that.objectSprite)
+                && Objects.equals(rigidBody, that.rigidBody);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(objectSprite, rigidBody, width, height);
     }
 }
