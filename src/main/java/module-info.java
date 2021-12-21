@@ -6,7 +6,7 @@ module ru.rsreu.doodle_game {
     opens ru.rsreu.doodle to javafx.fxml;
     exports ru.rsreu.doodle;
     exports ru.rsreu.doodle.controller;
-    exports ru.rsreu.doodle.physic;
+    exports ru.rsreu.doodle.logic;
     exports ru.rsreu.doodle.model;
     opens ru.rsreu.doodle.controller to javafx.fxml;
 }

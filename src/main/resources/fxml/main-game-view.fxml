@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.canvas.Canvas?>
-<AnchorPane fx:id="gameAnchor" prefWidth="450" prefHeight="750" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.doodle.controller.GameController">
-    <Canvas fx:id="gameCanvas" width="450" height="750" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="gameAnchor" prefHeight="750" prefWidth="450" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.doodle.controller.GameController">
+    <Canvas fx:id="gameCanvas" height="750" width="450" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <Label fx:id="scoreLabel" layoutX="14.0" layoutY="14.0">
+      <font>
+         <Font size="21.0" />
+      </font>
+   </Label>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package ru.rsreu.doodle.physic;
+package ru.rsreu.doodle.logic;
 
 import javafx.geometry.Point2D;
 

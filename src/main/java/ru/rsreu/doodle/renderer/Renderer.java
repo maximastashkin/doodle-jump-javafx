@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
 import ru.rsreu.doodle.GameApplication;
 import ru.rsreu.doodle.model.GameObject;
-import ru.rsreu.doodle.physic.Collider;
+import ru.rsreu.doodle.logic.Collider;
 
 import java.util.List;
 
@@ -60,12 +60,12 @@ public class Renderer {
         Point2D position = gameObject.getDrawPosition();
         this.graphicsContext.setFill(Color.LIGHTGREEN);
         //debug!!!!!!
-        this.graphicsContext.fillRect(
+        /*this.graphicsContext.fillRect(
                 gameObject.getDrawPosition().getX(),
                 gameObject.getDrawPosition().getY(),
                 gameObject.getRigidBody().getCollider().getDebugExtend().getX(),
                 gameObject.getRigidBody().getCollider().getDebugExtend().getY()
-        );
+        );*/
         transformContext(gameObject.getRigidBody().getCollider());
         this.graphicsContext.drawImage(
                 gameObject.getObjectSprite(),
@@ -75,8 +75,8 @@ public class Renderer {
                 gameObject.getHeight()
         );
         //debug!!!!!!
-        this.graphicsContext.setFill(Color.RED);
-        this.graphicsContext.fillRect(gameObject.getRigidBody().getCollider().getCenter().getX() - 2, gameObject.getRigidBody().getCollider().getCenter().getY() - 2, 4, 4);
+//        this.graphicsContext.setFill(Color.RED);
+//        this.graphicsContext.fillRect(gameObject.getRigidBody().getCollider().getCenter().getX() - 2, gameObject.getRigidBody().getCollider().getCenter().getY() - 2, 4, 4);
     }
 
     private void transformContext(Collider collider) {

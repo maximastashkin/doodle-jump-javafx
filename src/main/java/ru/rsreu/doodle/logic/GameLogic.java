@@ -1,4 +1,4 @@
-package ru.rsreu.doodle.physic;
+package ru.rsreu.doodle.logic;
 
 import javafx.geometry.Point2D;
 import ru.rsreu.doodle.GameApplication;
@@ -6,9 +6,10 @@ import ru.rsreu.doodle.GameApplication;
 import java.util.List;
 import java.util.Random;
 
-public class PhysicEngine {
+public class GameLogic {
     public final static Point2D MOVEMENT_FORCE = new Point2D(5f, 0);
     public final static float FALLING_SPEED = 4f;
+    private final static float SUFFICIENT_Y_VELOCITY_FOR_SCROLLING = -6f;
     // 185 max-height doodler jump for -12 jump force!!!!!!!!!!
     // 655 max-height doodler jump for -20 jump force!!!!!!!!!!
     private final static boolean SUBJECT_TO_GRAVITY = true;
@@ -21,7 +22,9 @@ public class PhysicEngine {
     //Debug!!!!, will make private
     public static Point2D JUMP_FORCE = new Point2D(0, -12);
 
-    public PhysicEngine() {
+    private int gameScore = 0;
+
+    public GameLogic() {
 
     }
 
@@ -108,13 +111,15 @@ public class PhysicEngine {
     }
 
     private void applyScreenScrolling(RigidBody playerRigidBody, List<RigidBody> otherBodies) {
-        double ySpeed = playerRigidBody.getVelocity().getY();
+        double playerYVelocity = playerRigidBody.getVelocity().getY();
         boolean isPlatformsStoppedMoving = otherBodies.get(0).getVelocity().getY() < 0;
-        if ((ySpeed <= -FALLING_SPEED || !playerRigidBody.isGravity()) && !isPlatformsStoppedMoving) {
+        if ((playerYVelocity <= SUFFICIENT_Y_VELOCITY_FOR_SCROLLING
+                || !playerRigidBody.isGravity()) && !isPlatformsStoppedMoving) {
+            updateGameScore(otherBodies.get(0).getVelocity().getY());
             playerRigidBody.setGravity(!SUBJECT_TO_GRAVITY);
             playerRigidBody.compensateYVelocity();
             otherBodies.forEach(otherBody -> {
-                otherBody.addForce(new Point2D(0, -ySpeed));
+                otherBody.addForce(new Point2D(0, -playerYVelocity));
                 otherBody.addForce(Point2D.ZERO.subtract(PLAYER_GRAVITY_FORCE));
             });
         } else {
@@ -129,6 +134,10 @@ public class PhysicEngine {
             }
         });
         playerRigidBody.setGravity(SUBJECT_TO_GRAVITY);
+    }
+
+    private void updateGameScore(double playerYVelocity) {
+        gameScore += playerYVelocity;
     }
 
     private void applyPlatformMove(RigidBody rigidBody) {
@@ -149,5 +158,9 @@ public class PhysicEngine {
             return PlatformMovingDirection.RIGHT;
         }
         return PlatformMovingDirection.LEFT;
+    }
+
+    public int getGameScore() {
+        return this.gameScore;
     }
 }

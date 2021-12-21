@@ -4,14 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import ru.rsreu.doodle.control.PlayerControl;
 import ru.rsreu.doodle.loop.GameLoopTimer;
 import ru.rsreu.doodle.model.GameObject;
-import ru.rsreu.doodle.physic.RigidBodyType;
-import ru.rsreu.doodle.physic.PhysicEngine;
-import ru.rsreu.doodle.physic.RigidBody;
+import ru.rsreu.doodle.logic.RigidBodyType;
+import ru.rsreu.doodle.logic.GameLogic;
+import ru.rsreu.doodle.logic.RigidBody;
 import ru.rsreu.doodle.renderer.Renderer;
 
 import java.net.URL;
@@ -34,13 +35,14 @@ public class GameController implements Initializable {
     private final static Image BACKGROUND_IMAGE =
             new Image(Objects.requireNonNull(GameController.class.getResourceAsStream("/img/background.png")));
 
-    private final static PhysicEngine PHYSIC_ENGINE = new PhysicEngine();
+    private final static GameLogic GAME_LOGIC = new GameLogic();
 
     @FXML
     public AnchorPane gameAnchor;
-
     @FXML
     public Canvas gameCanvas;
+    @FXML
+    public Label scoreLabel;
 
     private final List<GameObject> gameObjects = new ArrayList<>();
 
@@ -62,6 +64,7 @@ public class GameController implements Initializable {
                 playerControl.controlPlayer(player.getRigidBody());
                 updateGameObjects();
                 renderer.render();
+                updateGameScore();
             }
         };
         gameLoopTimer.start();
@@ -74,7 +77,7 @@ public class GameController implements Initializable {
 
     private void updateGameObjects() {
         List<RigidBody> rigidBodiesWithoutPlayer = this.getRigidBodiesWithoutPlayer();
-        gameObjects.forEach(gameObject -> gameObject.update(PHYSIC_ENGINE, rigidBodiesWithoutPlayer));
+        gameObjects.forEach(gameObject -> gameObject.update(GAME_LOGIC, rigidBodiesWithoutPlayer));
     }
 
     private List<RigidBody> getRigidBodiesWithoutPlayer() {
@@ -156,7 +159,11 @@ public class GameController implements Initializable {
         gameObjects.add(new GameObject(
                 new Image(Objects.requireNonNull(getClass().getResourceAsStream("/img/breaking_platform.png"))),
                 RigidBodyType.BREAKING_PLATFORM, 1.5f,
-                new Point2D(150, 450)
+                new Point2D(125, 450)
         ));
+    }
+
+    private void updateGameScore() {
+        this.scoreLabel.setText(String.valueOf(GAME_LOGIC.getGameScore()));
     }
 }
