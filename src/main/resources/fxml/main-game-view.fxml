@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="gameAnchor" prefHeight="750" prefWidth="450" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.rsreu.doodle.controller.GameController">
-    <Canvas fx:id="gameCanvas" height="750" width="450" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-   <Label fx:id="scoreLabel" layoutX="14.0" layoutY="14.0">
+   <Canvas fx:id="gameCanvas" height="750" width="450" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <Label fx:id="scoreLabel" layoutX="14.0" layoutY="14.0" visible="false">
       <font>
          <Font size="21.0" />
       </font>
    </Label>
+   <BorderPane prefHeight="750.0" prefWidth="450.0">
+      <center>
+         <StackPane>
+            <Button fx:id="startGameButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="Start" />
+            <Button fx:id="restartGameButton" mnemonicParsing="false" text="Restart" visible="false" />
+         </StackPane>
+      </center>
+      <top>
+         <BorderPane>
+            <right>
+               <Button fx:id="pauseGameButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="61.0" styleClass="pause-button" text="Pause" visible="false">
+                  <opaqueInsets>
+                     <Insets />
+                  </opaqueInsets>
+                  <BorderPane.margin>
+                     <Insets right="15.0" top="20.0" />
+                  </BorderPane.margin></Button>
+            </right>
+         </BorderPane>
+      </top>
+   </BorderPane>
 </AnchorPane>

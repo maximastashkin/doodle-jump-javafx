@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import ru.rsreu.doodle.control.KeyPolling;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GameApplication extends Application {
     public final static float WINDOW_WIDTH = 450;
@@ -14,14 +15,23 @@ public class GameApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Scene scene = loadGameScene();
-        stage.setScene(scene);
-
+        Scene scene = initialiseScene();
         KeyPolling.getInstance().pollScene(scene);
+        configureStage(stage, scene);
+        stage.show();
+    }
+
+    private void configureStage(Stage stage, Scene scene) {
+        stage.setScene(scene);
         stage.setMaximized(false);
         stage.setResizable(false);
         stage.setTitle("Doodle Jump");
-        stage.show();
+    }
+
+    private Scene initialiseScene() throws IOException {
+        Scene scene = loadGameScene();
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/style.css")).toExternalForm());
+        return scene;
     }
 
     public static void main(String[] args) {

@@ -64,4 +64,13 @@ public class PlatformsGenerator {
                 position
         );
     }
+
+    public GameObject generateStartPlatform() {
+        return new GameObject(
+                RigidBodyType.PLATFORM.getSprite(),
+                RigidBodyType.PLATFORM,
+                GameController.PLATFORM_SPRITE_SCALE,
+                new Point2D(175, 680)
+        );
+    }
 }

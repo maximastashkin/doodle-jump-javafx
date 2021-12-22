@@ -160,4 +160,8 @@ public class GameLogic {
     public int getGameScore() {
         return this.gameScore;
     }
+
+    public void resetGameScore() {
+        this.gameScore = 0;
+    }
 }

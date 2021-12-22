@@ -34,7 +34,7 @@ public class Renderer {
         graphicsContext.restore();
     }
 
-    private void prepare() {
+    public void prepare() {
         this.graphicsContext.setFill(Color.WHITE);
         this.graphicsContext.fillRect(0, 0, this.canvas.getWidth(), this.canvas.getHeight());
     }

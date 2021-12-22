@@ -14,7 +14,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
     private long lastFrameTimeNanos;
 
     private boolean isPaused;
-    private boolean isActive;
 
     private boolean pauseScheduled;
     private boolean playScheduled;
@@ -22,14 +21,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
 
     public boolean isPaused() {
         return this.isPaused;
-    }
-
-    public boolean isActive() {
-        return this.isActive;
-    }
-
-    public DoubleProperty animationDurationProperty() {
-        return this.animationDuration;
     }
 
     public void pause() {
@@ -47,7 +38,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
     @Override
     public void start() {
         super.start();
-        this.isActive = true;
         this.restartScheduled = true;
     }
 
@@ -56,7 +46,6 @@ public abstract class GameLoopTimer extends AnimationTimer {
         super.stop();
         this.pauseStart = 0;
         this.isPaused = false;
-        this.isActive = false;
         this.pauseScheduled = false;
         this.playScheduled = false;
         this.animationDuration.set(0);

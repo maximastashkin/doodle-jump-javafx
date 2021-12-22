@@ -1,0 +1,26 @@
+.button, .label {
+    -fx-text-fill: #F6F2D4;
+    -fx-background-color: #22577E;
+    -fx-border-color: black;
+}
+.button {
+    -fx-border-radius: 0;
+    -fx-pref-width: 100;
+    -fx-pref-height: 35;
+    -fx-font-size: 14;
+    -fx-border-width: 2;
+    -fx-border-color: #84DFFF;
+}
+
+.pause-button {
+    -fx-pref-width: 60;
+    -fx-pref-height: 25;
+    -fx-font-size: 10;
+}
+
+.button:hover {
+    -fx-background-color: #370665;
+    -fx-text-fill: #FC9918;
+    -fx-border-color: #FAEDF0;
+}
+
